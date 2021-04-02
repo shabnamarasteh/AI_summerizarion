@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست کاربران</title>
+    <div th:replace="fragment/header::head"></div>
+</head>
+<body>
+<div th:replace="fragment/header::menu"></div>
+<div th:if="${PersonList != null} " class="col-lg-12 ma-10 ba-w">
+    <div class="fl-r"><button class="btn btn-info"><a href="/v1/person/register">افزودن کاربر جدید</a></button></div>
+    <table class="table table-responsive fl-r">
+        <tr>
+            <td>نام</td>
+            <td>نام خانوادگی</td>
+        </tr>
+        <tr th:each="person : ${PersonList}">
+            <td th:text="${person.firstName}"></td>
+            <td th:text="${person.lastName}"></td>
+            <td><a class="edit-link" th:href="'/v1/person/'+${person.personId}">ویرایش</a></td>
+        </tr>
+    </table>
+</div>
+<div th:replace="fragment/footer::footer"></div>
+</body>
+</html>

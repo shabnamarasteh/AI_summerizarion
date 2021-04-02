@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت نام</title>
+    <div th:replace="fragment/header::head"></div>
+</head>
+<body>
+<div th:replace="fragment/header::menu"></div>
+<div class="fl-r body-box">
+    <div class="body-inner">
+        <div class="body-inner-top">
+            اطلاعات کاربری
+        </div>
+        <form action="/v1/person" enctype="multipart/form-data" method="POST" th:object="${Person}">
+            <div class="col-lg-12">
+                <div class="body-item col-lg-2">نام :</div>
+                <div class="body-item col-lg-4"><input name="firstName" th:value="${Person.getFirstName()}" type="text"/></div>
+                <div class="body-item col-lg-2">نام خانوادگی :</div>
+                <div class="body-item col-lg-4"><input name="lastName" th:value="${Person.getLastName()}" type="text"/></div>
+            </div>
+            <div class="col-lg-12" th:if="${Person.personId != null}">
+                <div></div>
+                <input name="personId" th:value="${Person.personId}" type="hidden"/>
+                <div class="body-item"><input class="btn btn-info half-width" type="submit" value="ویرایش"/></div>
+            </div>
+            <div class="col-lg-12" th:if="${Person.personId == null || Person.personId == 0}">
+                <div></div>
+                <div class="body-item"><input class="btn btn-success half-width" type="submit" value="ذخیره"/></div>
+            </div>
+        </form>
+    </div>
+    <div class="col-lg-12" th:if="${Person.personId != null} ">
+        <div></div>
+        <div>
+            <button class="btn btn-success fl-r">
+                <a th:href="'/v1/person/'+${Person.personId}+'/image'">افزودن تصویر جدید</a>
+            </button>
+        </div>
+        <div class="col-lg-12 ma-20" th:if="${Person.images != null && Person.images.size() > 0 } ">
+            <div th:each="image : ${Person.images}">
+                <div class="col-lg-3">
+                    <img height="200px" th:src="'/images/'+${image.address}" width="100%">
+                    <form enctype="multipart/form-data" class="center"
+                          method="POST"
+                          th:action="'/v1/person/'+${Person.personId}+'/image/'+${image.getImageId()}+'/delete'">
+                        <input name="_method" th:value="DELETE" type="hidden">
+                        <button class="btn-del btn-danger" type="submit">حذف تصویر</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="clear"></div>
+<div th:replace="fragment/footer::footer"></div>
+</body>
+</html>

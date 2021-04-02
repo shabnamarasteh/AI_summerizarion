@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>کاربر</title>
+    <div th:replace="fragment/header::head"></div>
+</head>
+<body>
+<div th:replace="fragment/header::menu"></div>
+<div th:if="${imageFound != null && imageFound.imageId != null} ">
+    <div>
+        <img height="200px" th:src="'/images/'+${imageFound.address}" width="200px">
+        <div th:text="${imageFound.getPerson().firstName}"></div>
+    </div>
+
+</div>
+<div th:elseIf>
+    <div>کاربر یافت نشد</div>
+</div>
+<div th:replace="fragment/footer::footer"></div>
+</body>
+</html>
